@@ -1,0 +1,9 @@
+.dashboard{
+    height: 580px;
+    width: auto;
+    padding: 135px;
+    background-image: url("https://image.freepik.com/foto-gratis/hermosos-paisajes-islandia-mientras-viaja_23-2149122507.jpg");
+    background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: auto 900px;
+  }

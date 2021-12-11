@@ -1,0 +1,7 @@
+.register{
+    padding: 285px;
+    background-image: url("https://images.pexels.com/photos/988508/pexels-photo-988508.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260");
+    background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover;
+  }
