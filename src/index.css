@@ -2,8 +2,20 @@
     font-family: Helvetica, Arial, sans-serif;
   }
 
-  .root{
-    background-color: black;
+  body{
+    font-size: 2rem;
+  border: 0;
+
+  background-image: linear-gradient(to right, 
+    #fdb94e,
+    #f9a852,
+    #f69653,
+    #f38654,
+    #f07654,
+    #ed6856,
+    #ef5956,
+    #ee4c58
+  );
   }
   
   input {

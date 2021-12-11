@@ -34,7 +34,7 @@ export const AppRouters = () => {
 
     <Navbar bg="dark" variant="dark">
         <Container>
-            <Navbar.Brand href="/">
+            <Navbar.Brand href="/Fronted-React-js">
                 <img
                     src="https://www.shareicon.net/data/512x512/2016/07/10/119874_apps_512x512.png"
                     width="50"
@@ -54,11 +54,11 @@ export const AppRouters = () => {
     <Router>
    
         <Switch>
-            <Route path="/register" component={ RegisterScreen } />
+            <Route path="/Fronted-React-js/register" component={ RegisterScreen } />
 
             <PrivateRoute 
                 exact 
-                path="/login" 
+                path="/Fronted-React-js/login" 
                 component={ LoginScreen }
                 isAuthenticated={ isExpired }
  
@@ -66,22 +66,22 @@ export const AppRouters = () => {
 
             <PublicRoute 
                 exact 
-                path="/dashboard" 
+                path="/Fronted-React-js/dashboard" 
                 component={ Dashboard }
                 isAuthenticated={ isExpired }
  
             />
             
 
-            <Route path="/dashboard" render={()=>{
+            <Route path="/Fronted-React-js/dashboard" render={()=>{
                 return (isExpired)?<Dashboard/>:<LoginScreen/>;
             }
             }/>
-            <Route path="/hotel" render={()=>{
+            <Route path="/Fronted-React-js/hotel" render={()=>{
                 return (isExpired)?<HotelScreen/>:<LoginScreen/>;
             }
             }/>
-            <Route path="/country" render={()=>{
+            <Route path="/Fronted-React-js/country" render={()=>{
                 return (isExpired)?<CountryScreen/>:<LoginScreen/>;
             }
             }/>

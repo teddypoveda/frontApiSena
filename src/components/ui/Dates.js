@@ -20,10 +20,10 @@ export const Dates = () => {
             </span>
             
             <Nav className="me-auto">
-                <Nav.Link href="/dashboard">Dashboard</Nav.Link>
-                <Nav.Link href="/hotel">Hoteles</Nav.Link>
-                <Nav.Link href="/country">Paises</Nav.Link>
-                <Nav.Link href="/register"> Usuario Nuevo</Nav.Link>
+                <Nav.Link href="/Fronted-React-js/dashboard">Dashboard</Nav.Link>
+                <Nav.Link href="/Fronted-React-js/hotel">Hoteles</Nav.Link>
+                <Nav.Link href="/Fronted-React-js/country">Paises</Nav.Link>
+                <Nav.Link href="/Fronted-React-js/register"> Usuario Nuevo</Nav.Link>
             </Nav>
             <Button onClick={startLogout()}>
                 <i className="fas fa-sign-out-alt"></i> 
