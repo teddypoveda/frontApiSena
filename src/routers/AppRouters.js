@@ -73,16 +73,12 @@ export const AppRouters = () => {
             />
             
 
-            <Route path="/dashboard" render={()=>{
-                return (isExpired)?<Dashboard/>:<LoginScreen/>;
-            }
-            }/>
             <Route path="/hotel" render={()=>{
-                return (isExpired)?<HotelScreen/>:<LoginScreen/>;
+                return (isExpired)?<LoginScreen/>:<HotelScreen/>;
             }
             }/>
             <Route path="/country" render={()=>{
-                return (isExpired)?<CountryScreen/>:<LoginScreen/>;
+                return (isExpired)?<LoginScreen/>:<CountryScreen/>;
             }
             }/>
 
