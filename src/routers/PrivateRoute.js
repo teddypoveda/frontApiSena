@@ -15,7 +15,7 @@ export const PrivateRoute = ({
                 component={ (props) => (
                     ( isAuthenticated )
                         ? ( <Component { ...props } /> )
-                        : ( <Redirect to="/Fronted-React-js/dashboard" /> )
+                        : ( <Redirect to="/dashboard" /> )
                 )}
             
             />

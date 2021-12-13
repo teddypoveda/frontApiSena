@@ -1,5 +1,5 @@
 import React,{useEffect} from 'react'
-import { HashRouter as Router,
+import { BrowserRouter as Router,
     Switch,
     Route
     } from 'react-router-dom';
@@ -34,7 +34,7 @@ export const AppRouters = () => {
 
     <Navbar bg="dark" variant="dark">
         <Container>
-            <Navbar.Brand href="/Fronted-React-js">
+            <Navbar.Brand href="/">
                 <img
                     src="https://www.shareicon.net/data/512x512/2016/07/10/119874_apps_512x512.png"
                     width="50"
@@ -54,11 +54,11 @@ export const AppRouters = () => {
     <Router>
    
         <Switch>
-            <Route path="/Fronted-React-js/register" component={ RegisterScreen } />
+            <Route path="/register" component={ RegisterScreen } />
 
             <PrivateRoute 
                 exact 
-                path="/Fronted-React-js/login" 
+                path="/login" 
                 component={ LoginScreen }
                 isAuthenticated={ isExpired }
  
@@ -66,22 +66,22 @@ export const AppRouters = () => {
 
             <PublicRoute 
                 exact 
-                path="/Fronted-React-js/dashboard" 
+                path="/dashboard" 
                 component={ Dashboard }
                 isAuthenticated={ isExpired }
  
             />
             
 
-            <Route path="/Fronted-React-js/dashboard" render={()=>{
+            <Route path="/dashboard" render={()=>{
                 return (isExpired)?<Dashboard/>:<LoginScreen/>;
             }
             }/>
-            <Route path="/Fronted-React-js/hotel" render={()=>{
+            <Route path="/hotel" render={()=>{
                 return (isExpired)?<HotelScreen/>:<LoginScreen/>;
             }
             }/>
-            <Route path="/Fronted-React-js/country" render={()=>{
+            <Route path="/country" render={()=>{
                 return (isExpired)?<CountryScreen/>:<LoginScreen/>;
             }
             }/>

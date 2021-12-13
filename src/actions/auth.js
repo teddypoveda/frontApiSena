@@ -101,4 +101,3 @@ export const startLogout = () => {
     }
 }
 
-//const logout = () => ({ type: types.authLogout })

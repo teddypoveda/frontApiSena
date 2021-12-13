@@ -15,7 +15,7 @@ export const PublicRoute = ({
         
         <Route { ...rest }
             component={ (props) => (( isAuthenticated )
-                    ? ( <Redirect to="/Fronted-React-js/login" /> )
+                    ? ( <Redirect to="/login" /> )
                     : ( <Component { ...props } /> )
             )}
         
