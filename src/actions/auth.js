@@ -1,6 +1,8 @@
-import { fetchSinToken, fetchConToken } from '../helpers/fetch';
+import { fetchSinToken,fetchConToken } from '../helpers/fetch';
 import { types } from '../types/types';
 import Swal from 'sweetalert2';
+import { Alert,Button } from 'react-bootstrap';
+
 
 
 
@@ -13,22 +15,22 @@ export const startLogin = ( email, password ) => {
         
         if( resp.ok) {
             localStorage.setItem('token', body.token );
-            const response = await fetchConToken( 'account/tokenValid', {}, 'GET' );
-            const bodies = await response.json();
-            console.log(bodies);
-            if(response.ok){
-                dispatch( login({
-                    firstName: bodies.firstName,
-                    lastName: bodies.lastName,
-                    rol: bodies.rol
+            var usuario = body.usuario;
+            dispatch( login({
+                    email:usuario.email,
+                    nombres: usuario.nombres,
+                    apellidos: usuario.apellidos,
+                    id:usuario.id,
+                    rol: body.rol
                 }) );
-                localStorage.setItem('firstName',bodies.firstName);
-                localStorage.setItem('lastName',bodies.lastName);
-                localStorage.setItem('rol',bodies.rol);
+                localStorage.setItem('email',usuario.email);
+                localStorage.setItem('id',usuario.id);
+                localStorage.setItem('nombres',usuario.nombres);
+                localStorage.setItem('apellidos',usuario.apellidos);
+                localStorage.setItem('rol',body.rol);
                 localStorage.setItem('checking',true);
-
-                Swal.fire('Ingreso Exitoso!', 'Bienvenido al sisstema de hoteles!', 'success');
-            }
+                Swal.fire('¡Ingreso Exitoso!', '¡Bienvenido al sistema de asistencia de aprendices!', 'success');
+            
         }else{
             Swal.fire('Error', 'Email o Contraseña invalida', 'error');
         }
@@ -37,14 +39,30 @@ export const startLogin = ( email, password ) => {
     }
 }
 
-export const startRegister = (  email, firstName, lastName, rol, password ) => {
+export const fichasUser = (id) => {
+    
+    return async() => {
+        try {
+
+            const resp = await fetchConToken( 'usuariosfichas/usuario/'+id, { }, 'GET' );
+            return await resp.json();
+            
+        } catch (error) {
+            console.log(error);
+        }
+
+
+    }
+}
+
+export const startRegister = (  email, nombres, apellidos, nroDocumento, tipoDocumento, rol, password ) => {
     return async(dispatch) => {
-        (!rol==='')||(rol='Administrator');
+        (!rol==='')||(rol='Aprendiz');
         //console.log(rol);
         try {
-            const roles=[rol];
-            const resp = await fetchSinToken( 'account/register', { email, firstName, lastName,roles, password}, 'POST' );
-            
+            var numeroDocumento = Number(nroDocumento);
+            var tipoDocumentoId = Number(tipoDocumento);
+            const resp = await fetchSinToken( 'account/register', { email, nombres, apellidos, numeroDocumento, tipoDocumentoId, password, rol}, 'POST' );
             if( resp.ok ) {
                 Swal.fire('Registro Exitoso!', 'Ahora puedes ingresar al sisstema!', 'success');
             } else {

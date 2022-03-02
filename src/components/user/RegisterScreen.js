@@ -11,22 +11,24 @@ export const RegisterScreen = ({history}) => {
 
     const initialState={
         email: '',
-        firstName:'',
-        lastName:'',
+        nombres:'',
+        apellidos:'',
+        nroDocumento:'',
+        tipoDocumento:'',
         rol:'',
         password: ''
 
     }
     const [ formRegisterValues, handleLoginInputChange, reset ] = useForm(initialState);
 
-    const { email, firstName, lastName,rol,password } = formRegisterValues;
+    const { email, nombres, apellidos, nroDocumento, tipoDocumento, rol, password } = formRegisterValues;
 
     const rolle=((localStorage.getItem('rol')==="Administrator"))||("visually-hidden");
 
 
     const handleLogin = ( e ) => {
         e.preventDefault();
-        dispatch( startRegister( email, firstName, lastName, rol, password ) );
+        dispatch( startRegister( email, nombres, apellidos, nroDocumento, tipoDocumento, rol, password ) );
         reset();
         return (<Spinner animation="border" role="status">
                         <span className="visually-hidden">Loading...</span>
@@ -45,7 +47,7 @@ export const RegisterScreen = ({history}) => {
                             <input 
                                 type="text"
                                 className="form-control bg-light border"
-                                placeholder="Correo"
+                                placeholder="Correo Mi sena"
                                 name="email"
                                 id="validationCustom01"
                                 value={ email }
@@ -62,8 +64,8 @@ export const RegisterScreen = ({history}) => {
                                 type="text"
                                 className="form-control bg-light border"
                                 placeholder="Nombres"
-                                name="firstName"
-                                value={ firstName }
+                                name="nombres"
+                                value={ nombres }
                                 onChange={ handleLoginInputChange }
                             />
                         </div>
@@ -72,17 +74,40 @@ export const RegisterScreen = ({history}) => {
                                 type="text"
                                 className="form-control bg-light border"
                                 placeholder="Apellidos"
-                                name="lastName"
-                                value={ lastName }
+                                name="apellidos"
+                                value={ apellidos }
                                 onChange={ handleLoginInputChange }
                             />
                         </div>
+                        <div className="form-group mt-4">
+                            <input 
+                                type="text"
+                                className="form-control bg-light border"
+                                placeholder="Numero de documento"
+                                name="nroDocumento"
+                                value={ nroDocumento }
+                                onChange={ handleLoginInputChange }
+                            />
+                        </div>
+                        <div className={`input-group mb-3 mt-4`} >
+                        <label className="input-group-text" >Tipo Documento</label>
+                        <select className="form-select" name="tipoDocumento" value={tipoDocumento} onChange={ handleLoginInputChange }  required aria-label="select example">
+                            <option >Escoger Tipo de Documento</option>
+                            <option value={"1"}>Cédula</option>
+                            <option value={"2"}>Tarjeta identidad</option>
+                            <option value={"3"}>Cédula de extrangeria</option>
+
+                        </select>
+                        <div class="invalid-feedback">Example invalid select feedback</div>
+                        </div>
+
                         <div className={`input-group mb-3 mt-4 ${rolle}`} >
                         <label className="input-group-text" >Rol</label>
                         <select className="form-select" name="rol" defaultValue={ rol } onChange={ handleLoginInputChange }  required aria-label="select example">
                             <option >roles...</option>
-                            <option defaultValue="user">usuario</option>
-                            <option defaultValue="Administrator">Administrador</option>
+                            <option value={"Aprendiz"}>Aprendiz</option>
+                            <option value={"Instructor"}>Instructor</option>
+                            <option value={"Administrator"}>Administrador</option>
 
                         </select>
                         <div class="invalid-feedback">Example invalid select feedback</div>

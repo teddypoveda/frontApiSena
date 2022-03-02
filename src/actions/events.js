@@ -1,14 +1,35 @@
 import { fetchConToken } from "../helpers/fetch";
 import { types } from "../types/types";
 import Swal from 'sweetalert2'
+import { ToastContainer } from "react-toastify";
 
-export const eventLoadingHotel = () =>{
+
+
+
+export const eventUpdateRolesUser = (id, roles) =>{
     return async (dispatch) => {
         try {
-            const resp = await fetchConToken('hotel?PageNumber=1&PageSize=19',{});
-            const body = await resp.json();
-
-            dispatch(eventHotelGet(body));
+            let rol= [];
+            (!roles.Aprendiz)||rol.push("Aprendiz");
+            (!roles.Vocero)||rol.push("Vocero");
+            (!roles.Instructor)||rol.push("Instructor");
+            (!roles.Administrador)||rol.push("Administrador");
+            
+            const resp = await fetchConToken(`usuarios/roles/${id}`,rol,"Put");
+            if(resp.ok){
+                //eventUpdatedRolesUser();
+                Swal.fire(
+                'Exitosa!',
+                'Se modificaron los roles correctamente!',
+                'success'
+            )}else{
+                Swal.fire(
+                'Error!',
+                'No se puede agregar!',
+                'error'
+                );
+            }
+            dispatch(closeModal());
             
 
         } catch (error) {
@@ -18,30 +39,66 @@ export const eventLoadingHotel = () =>{
     
     }
 } 
-export const eventLoadingCountry = () =>{
+export const eventLoadingUser = (size=null, number=null, orderBy=null) =>{
     return async (dispatch) => {
         try {
-            const resp = await fetchConToken('country?PageNumber=1&PageSize=19',{});
+            const resp = await fetchConToken(`Usuarios?pageSize=${size}&pageNumber=${number}&orderBy=${orderBy}`,{});
             const body = await resp.json();
             console.log(body);
-            dispatch(eventCountryGet(body));
+            dispatch(eventUserGet(body));
             
 
         } catch (error) {
             console.log(error);
         }
-
-    
     }
 } 
-export const eventAddNewHotel = (event)=>{
+export const eventAddNewUser = (event)=>{
     
+
     return async (dispatch) => {
         try {
-            const resp = await fetchConToken('hotel',event,'Post');
-            console.log(resp);
+            const resp = await fetchConToken('usuarios',event,'Post');
+            const body = await resp.json();
+        
             if(resp.ok){
-                dispatch(eventPostHotel(event));
+                //dispatch(eventPostUser(event));
+                dispatch(closeModal());
+                Swal.fire(
+                'Exitosa!',
+                'Se agregó correctamente!',
+                'success'
+            )}else{
+                Swal.fire(
+                'Error!',
+                'No se puede agregar!',
+                'error'
+                );
+            }
+            
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export const eventAddNewProgram = (event)=>{
+
+    return async (dispatch) => {
+        try {
+
+            const data ={
+                id:event.id,
+                nombre:event.nombre,
+                version:event.version,
+                descripcion:event.descripcion,
+                tipoProgramaId: event.tipoProgramaId,
+            } 
+            const resp = await fetchConToken('programas',data,'Post');
+
+            if(resp.ok){
+                //dispatch(eventPostprogram(event));
                 Swal.fire(
                 'Exitosa!',
                 'Se agregó correctamente!',
@@ -58,22 +115,23 @@ export const eventAddNewHotel = (event)=>{
         } catch (error) {
             console.log(error);
         }
-    }   
+    }
 }
-export const eventAddNewCountry = (event)=>{
-    
+
+export const eventAddNewFicha = (event)=>{
+
     return async (dispatch) => {
         try {
-            const resp = await fetchConToken('country',event,'Post');
-            console.log(resp);
+
+            const resp = await fetchConToken('fichas',event,'Post');
+
             if(resp.ok){
-                dispatch(eventPostCountry(event));
+                //dispatch(eventPostprogram(event));
                 Swal.fire(
                 'Exitosa!',
                 'Se agregó correctamente!',
                 'success'
-            )
-            }else{
+            )}else{
                 Swal.fire(
                 'Error!',
                 'No se puede agregar!',
@@ -85,16 +143,17 @@ export const eventAddNewCountry = (event)=>{
         } catch (error) {
             console.log(error);
         }
-    }   
+    }
 }
-export const eventDeleteHotel = (event)=>{
+
+export const eventDeleteFicha = (event)=>{
     
     return async (dispatch) => {
         try {
-            const resp = await fetchConToken('hotel/'+event,{},'Delete');
+            const resp = await fetchConToken('fichas/'+event,{},'Delete');
             
             if(resp.ok){
-                dispatch(eventDeletedHotel(event));
+                //dispatch(eventDeletedProgram(event));
                 Swal.fire(
                 'Exitosa!',
                 'Se eliminó correctamente!',
@@ -116,13 +175,15 @@ export const eventDeleteHotel = (event)=>{
         }
     }   
 }
-export const eventDeleteCountry = (id)=>{
+
+export const eventDeleteProgram = (event)=>{
     
     return async (dispatch) => {
         try {
-            const resp = await fetchConToken('country/'+id,{},'Delete');
+            const resp = await fetchConToken('programas/'+event,{},'Delete');
+            
             if(resp.ok){
-                dispatch(eventDeletedCountry(id));
+                //dispatch(eventDeletedProgram(event));
                 Swal.fire(
                 'Exitosa!',
                 'Se eliminó correctamente!',
@@ -138,18 +199,50 @@ export const eventDeleteCountry = (id)=>{
             dispatch(closeModalDelete());
 
 
+
         } catch (error) {
             console.log(error);
         }
     }   
 }
-export const eventUpdateHotel = (event)=>{
+
+export const eventDeleteUser = (event)=>{
     
     return async (dispatch) => {
         try {
-            const resp = await fetchConToken('hotel/'+event.id,event,'PUT');
+            const resp = await fetchConToken('usuarios/'+event,{},'Delete');
+            
             if(resp.ok){
-                dispatch(eventUpdatedHotel(event));
+                //dispatch(eventDeletedUser(event));
+                Swal.fire(
+                'Exitosa!',
+                'Se eliminó correctamente!',
+                'success'
+              )}else{
+              Swal.fire(
+                'Error!',
+                'No se puede eliminar!',
+                'error'
+              );
+              }
+
+            dispatch(closeModalDelete());
+
+
+
+        } catch (error) {
+            console.log(error);
+        }
+    }   
+}
+
+export const eventUpdateUser = (event)=>{
+    
+    return async (dispatch) => {
+        try {
+            const resp = await fetchConToken('usuarios/'+event.id,event,'PUT');
+            if(resp.ok){
+                //dispatch(eventUpdatedUser(event));
                 Swal.fire(
                 'Exitosa!',
                 'Se modificó correctamente!',
@@ -166,16 +259,17 @@ export const eventUpdateHotel = (event)=>{
 
         } catch (error) {
             console.log(error);
-        }
-    }   
+        } 
+    }    
 }
-export const eventUpdateCountry = (event)=>{
+
+export const eventUpdateProgram = (event)=>{
     
     return async (dispatch) => {
         try {
-            const resp = await fetchConToken('country/'+event.id,event,'PUT');
+            const resp = await fetchConToken('programas/'+event.id,event,'PUT');
             if(resp.ok){
-                dispatch(eventUpdatedCountry(event));
+                //dispatch(eventUpdatedProgram(event));
                 Swal.fire(
                 'Exitosa!',
                 'Se modificó correctamente!',
@@ -187,38 +281,75 @@ export const eventUpdateCountry = (event)=>{
                 'error'
               );
               }
-            dispatch(eventUpdatedCountry());
+            
             dispatch(closeModal());
 
         } catch (error) {
             console.log(error);
-        }
-    }   
+        } 
+    }    
 }
+
+export const eventUpdateFicha = (event)=>{
+
+    const data ={
+        id:event.id,
+        fechaInicio:event.fechaInicio,
+        fechaFin:event.fechaFin,
+        fechaInicioPracticas:event.fechaInicioPracticas,
+        programaId: event.programaId,
+    } 
+    
+    return async (dispatch) => {
+
+        try {
+            const resp = await fetchConToken('fichas/'+data.id,data,'PUT');
+            if(resp.ok){
+                //dispatch(eventUpdatedProgram(event));
+                Swal.fire(
+                'Exitosa!',
+                'Se modificó correctamente!',
+                'success'
+              )}else{
+              Swal.fire(
+                'Error!',
+                'No se puede modificar!',
+                'error'
+              );
+              }
+            
+            dispatch(closeModal());
+
+        } catch (error) {
+            console.log(error);
+        } 
+    }    
+}
+
+
 const closeModalDelete = ()=> ({   type: types.uiModalDeleteClose });
 
 const closeModal = ()=> ({ type: types.uiCloseModal});
 
-const eventPostHotel = (event)=> ({ type: types.eventAddHotel, payload: event});
-const eventPostCountry = (event)=> ({ type: types.eventAddCountry, payload: event });
+const eventPostUser = (event)=> ({ type: types.eventAddUser, payload: event});
+//const eventPostprogram = (event)=> ({ type: types.eventAddProgram, payload: event});
 
-const eventHotelGet = (event)=>{
-    return{type: types.eventHotelGet,
-        payload: event}
-} 
-const eventCountryGet = (event)=>{
-    return{type: types.eventCountryGet,
+
+const eventUserGet = (event)=>{
+    return{type: types.eventUserGet,
         payload: event}
 } 
 
 
 
-const eventDeletedHotel = (id) => ({ type: types.eventDeletedHotel, payload:id });
+//const eventDeletedUser = (id) => ({ type: types.eventDeletedUser, payload:id });
 
-const eventDeletedCountry = (id) => ({ type: types.eventDeletedCountry, payload:id});
+//const eventDeletedCountry = (id) => ({ type: types.eventDeletedCountry, payload:id});
 
-const eventUpdatedHotel = (event) => ({ type: types.eventUpdatedHotel, payload:event });
-const eventUpdatedCountry = (event) => ({ type: types.eventUpdatedCountry, payload:event});
+//const eventUpdatedUser = (event) => ({ type: types.eventUpdatedUser, payload:event });
+//const eventUpdatedCountry = (event) => ({ type: types.eventUpdatedCountry, payload:event});
+
+//const eventUpdatedRolesUser = (event) => ({ type: types.eventUpdatedCountry, payload:event});
 
 export const evenModaltDeleted = () => ({ type: types.modalDelete });
 

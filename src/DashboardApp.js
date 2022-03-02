@@ -11,7 +11,7 @@ export const DashboardApp = () => {
     
     return (
         <Provider store={store}>
-            <AppRouters />        
+         <AppRouters />     
         </Provider>
     )
 }

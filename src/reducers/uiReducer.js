@@ -1,22 +1,29 @@
 import { types } from "../types/types";
 
 const initialState = {
-    modalOpenHotel: false,
-    modalOpenCountry: false,
+    modalOpen: false,
+    modalDetails: false,
     modalDelete:false,
     modalNew: true,
     idSelector:null,
-    hotelSelector:{id:'',
-    country:'',
-    name:'',
-    address:'',
-    rating:'',
-    countryId:''},
-    countrySelector:{
-        id:'',
-        name:'',
-        shortName:''
-    }
+    resourceSelector:{id:'',
+    nombres:'',
+    apellidos:'',
+    rol:'',
+    estado:'',
+    numeroDoucmento:'',
+    tipoDoucmento:'',
+    email:'',
+    emailConfirmed:'',
+    nombre:'',
+    version:'',
+    descripcion:'',
+    tipoProgramaId:'',
+    fechaInicio:'',
+    fechaFin:'',
+    fechaInicioPracticas:'',
+    programaId:'',},
+
 }
 
 
@@ -24,38 +31,42 @@ const initialState = {
 export const uiReducer = ( state = initialState, action ) => {
 
     switch ( action.type ) {
-        case types.uiOpenModalHotel:
-            return {
-                ...state,
-                modalNew:true,
-                modalOpenHotel: true
+
+        case types.uiOpenModal:
+            if(action.select===null){
+                return{
+                    ...state,
+                    modalNew:true,
+                    modalOpen: true
+                }
             }
-        case types.uiOpenModalCountry:
             return {
                 ...state,
-                modalNew:true,
-                modalOpenCountry: true
-            }
-        case types.uiOpenModalHotelId:
-            return {
-                ...state,
-                modalOpenHotel: true,
                 modalNew:false,
-                hotelSelector:action.hotelUpdate
+                modalOpen: true,
+                resourceSelector:action.select
             }
-        case types.uiOpenModalCountryId:
+
+        case types.uiOpenModalRolesUser:
             return {
                 ...state,
-                modalOpenCountry: true,
-                modalNew:false,
-                countrySelector:action.countryUpdate
+                
             }
             
         case types.uiModalDelete:
             return {
                 ...state,
                 modalDelete: true,
-                idSelector:action.idDelete
+                idSelector:action.resourceDelete.id,
+                resourceSelector:action.resourceDelete
+            }
+
+        case types.uiOpenModalDetails:
+            return {
+                ...state,
+                modalDetails: true,
+                idSelector:action.select.id,
+                resourceSelector:action.select
             }
         case types.uiModalDeleteClose:
             return {
@@ -65,25 +76,13 @@ export const uiReducer = ( state = initialState, action ) => {
         case types.uiCloseModal:
             return {
                 ...state,
-                modalOpenCountry: false,
-                modalOpenHotel:false,
-                hotelSelector: {id:'',
-                country:'',
-                name:'',
-                address:'',
-                rating:'',
-                countryId:''},
-                countrySelector:{id:'', name:'',shortName:''}
+                modalOpen:false,
+                modalDetails: false,
+
             }
         case types.eventClearActiveEvent:
             return {
-                ...state,
-                hotel: {id:'',
-                country:'',
-                name:'',
-                address:'',
-                rating:'',
-                countryId:''}
+                ...state
             }
     
         default:

@@ -2,26 +2,18 @@
     font-family: Helvetica, Arial, sans-serif;
   }
 
-  body{
-    font-size: 2rem;
-  border: 0;
 
-  background-image: linear-gradient(to right, 
-    #fdb94e,
-    #f9a852,
-    #f69653,
-    #f38654,
-    #f07654,
-    #ed6856,
-    #ef5956,
-    #ee4c58
-  );
-  }
-  
+
   input {
     color: grey;
     font-size: 1.2rem;
     width: 100%;
+  }
+  .fontletter{
+    font-family: 'Yellowtail', cursive;
+    color: red;
+    font-size: 28px;
+    text-shadow: 4px 4px 4px #aaa;
   }
 
   
