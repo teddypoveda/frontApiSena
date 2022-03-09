@@ -1,23 +1,28 @@
 import { types } from '../types/types';
 
 const initialState = {
-    fichas: [{
+    clases: [{
         id:'',
-        fechaInicio:'',
-        fechaFin:'',
-        fechaInicioPracticas:'',
-        programaId:'',
+        fechaHora:'',
+        aula:'',
+        nombre:'',
+        apiUserId:'',
+        fichaId:'',
     }],
-    fichaSelector: {
+    fichaSelector:{
         id:'',
-        fechaInicio:'',
-        fechaFin:'',
-        fechaInicioPracticas:'',
-        programaId:'',
+    },
+    claseSelector: {
+        id:'',
+        fechaHora:'',
+        aula:'',
+        nombre:'',
+        apiUserId:'',
+        fichaId:'',
     },
     activeEvent: null
 };
-export const fichaReducer = ( state = initialState, action ) => {
+export const claseReducer = ( state = initialState, action ) => {
 
     switch ( action.type ) {
         
@@ -29,10 +34,10 @@ export const fichaReducer = ( state = initialState, action ) => {
                      action.payload
                 ],
             }
-        case types.eventUserGet:
+        case types.eventFichaClasesGet:
             return {
                 ...state,
-                user: action.payload                
+                clases: action.payload                
             }
 
         case types.eventClearModal:

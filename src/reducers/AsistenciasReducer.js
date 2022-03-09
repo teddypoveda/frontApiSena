@@ -1,23 +1,15 @@
 import { types } from '../types/types';
 
 const initialState = {
-    fichas: [{
+    inasistencias: [{
         id:'',
-        fechaInicio:'',
-        fechaFin:'',
-        fechaInicioPracticas:'',
-        programaId:'',
+        apiUserId:'',
+        tipoAsistenciaId:'',
+        estadoAsistenciaId:'',
     }],
-    fichaSelector: {
-        id:'',
-        fechaInicio:'',
-        fechaFin:'',
-        fechaInicioPracticas:'',
-        programaId:'',
-    },
     activeEvent: null
 };
-export const fichaReducer = ( state = initialState, action ) => {
+export const AsistenciasReducer = ( state = initialState, action ) => {
 
     switch ( action.type ) {
         
@@ -29,10 +21,10 @@ export const fichaReducer = ( state = initialState, action ) => {
                      action.payload
                 ],
             }
-        case types.eventUserGet:
+        case types.eventInasistenciasGet:
             return {
                 ...state,
-                user: action.payload                
+                inasistencias: action.payload                
             }
 
         case types.eventClearModal:

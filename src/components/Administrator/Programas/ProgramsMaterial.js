@@ -4,7 +4,7 @@ import { Button } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import '../../styles.css';
 import { uiOpenModal, uiOpenModalDelete, uiOpenModalDetails } from '../../../actions/ui';
-import { Bodies } from './bodies';
+import { ResourceProgramasModal } from '../Modal/ResourceProgramasModal';
 
 
 const columns= [
@@ -61,11 +61,6 @@ const columns= [
                 onClick: (event, rowData) => dispatch(uiOpenModal("edit", rowData))
               },
               {
-                icon: 'view_column',
-                tooltip: 'Saber Mas',
-                onClick: (event, rowData) => dispatch(uiOpenModalDetails(rowData))
-              },
-              {
                 icon: 'delete',
                 tooltip: 'Eliminar Programa',
                 onClick: (event, rowData) => dispatch(uiOpenModalDelete(rowData))
@@ -85,7 +80,7 @@ const columns= [
             }}
             
           />
-          <Bodies/>  
+          <ResourceProgramasModal/>  
 
       </div>
       );

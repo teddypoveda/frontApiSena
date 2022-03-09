@@ -27,7 +27,7 @@ export const startLogin = ( email, password ) => {
                 localStorage.setItem('id',usuario.id);
                 localStorage.setItem('nombres',usuario.nombres);
                 localStorage.setItem('apellidos',usuario.apellidos);
-                localStorage.setItem('rol',body.rol);
+                localStorage.setItem('rol',body.rol[0]);
                 localStorage.setItem('checking',true);
                 Swal.fire('¡Ingreso Exitoso!', '¡Bienvenido al sistema de asistencia de aprendices!', 'success');
             

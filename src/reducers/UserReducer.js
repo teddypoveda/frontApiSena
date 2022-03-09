@@ -13,6 +13,16 @@ const initialState = {
         emailConfirmed:''
 
     }],
+    userSelector:{
+        roles:'',
+        id:'',
+        nombres:'',
+        apellidos:'',
+        numeroDocumento:'',
+        tipoDocumentoId:'',
+        email:''
+    },
+
     activeEvent: null
 };
 export const userReducer = ( state = initialState, action ) => {

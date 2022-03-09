@@ -4,7 +4,8 @@ import { Button } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import '../../styles.css';
 import { uiOpenModal, uiOpenModalDelete, uiOpenModalDetails } from '../../../actions/ui';
-import { Bodies } from './bodies';
+import { ResourceClasesModal } from '../Modal/ResourceClasesModal';
+
 
 
 const columns= [
@@ -21,6 +22,7 @@ const columns= [
     const dispatch = useDispatch();
 
       const tableRef = React.createRef();
+      const id = localStorage.getItem('id');
       return(
         <div className="App">
         <br />
@@ -31,13 +33,12 @@ const columns= [
             tableRef={tableRef}
             data={query =>
               new Promise((resolve, reject) => {
-                let url = 'https://localhost:44374/api/Clases?'
-                url += 'pageSize=' + query.pageSize
-                url += '&pageNumber=' + (query.page + 1)
+                let url = 'https://localhost:44374/api/Clases/usuario?idUser='+id;
+                url += '&pageSize=' + query.pageSize;
+                url += '&pageNumber=' + (query.page + 1);
                 fetch(url)
                   .then(response => response.json())
                   .then(result => {
-                    console.log(result)
                     resolve({
                       data: result.clases,
                       page: result.metadata.currentPage -1,
@@ -84,7 +85,7 @@ const columns= [
             }}
             
           />
-          <Bodies/>  
+          <ResourceClasesModal/>  
 
       </div>
       );

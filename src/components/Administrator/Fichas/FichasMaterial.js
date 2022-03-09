@@ -4,7 +4,8 @@ import { Button } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import '../../styles.css';
 import { uiOpenModal, uiOpenModalDelete, uiOpenModalDetails } from '../../../actions/ui';
-import { Bodies } from './bodies';
+import { ResourceFichasModal } from '../Modal/ResourceFichasModal';
+
 
 
 const columns= [
@@ -84,7 +85,7 @@ const columns= [
             }}
             
           />
-          <Bodies/>  
+          <ResourceFichasModal/>  
 
       </div>
       );

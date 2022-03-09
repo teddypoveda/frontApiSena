@@ -17,7 +17,8 @@ import { UsersScreen } from '../components/Administrator/user/UsersScreen';
 import { ProgramsScreen } from '../components/Administrator/Programas/ProgramsScreen';
 import { FichasScreen } from '../components/Administrator/Fichas/FichasScreen';
 import { ClasesScreen } from '../components/Instructor/Clases/ClasesScreen';
-
+import { FichasAsignadasScreen } from '../components/Instructor/FichasAsignadas/FichasAsignadasScreen';
+import { InasistenciasScreen } from '../components/Aprendiz/InasistenciasScreen';
 
 
 export const AppRouters = () => {
@@ -92,12 +93,16 @@ export const AppRouters = () => {
 
             <Route path="/clases" render={()=>{
                 return (rol==='Instructor')?<ClasesScreen/>:<Dashboard/>;
+            }}/>
+
+            <Route path="/fichasasignadas" render={()=>{
+                return (rol==='Instructor')?<FichasAsignadasScreen/>:<Dashboard/>;
             }
             }/>
-            {/* <Route path="/fichasAsignadas" render={()=>{
-                return (rol==='Administrador')?<FichasAsignadasScreen/>:<Dashboard/>;
+            <Route path="/inasistencias" render={()=>{
+                return (rol==='Aprendiz')?<InasistenciasScreen/>:<Dashboard/>;
             }
-            }/>   */}
+            }/>   
 
 
         </Switch> 

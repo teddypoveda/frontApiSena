@@ -1,42 +1,55 @@
 import { Nav, Button, Badge, NavDropdown } from 'react-bootstrap';
-import React from 'react'
-//import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { fichasUser, startLogout } from '../../actions/auth';
-
-
 
 
 export const Dates = () => {
     const dispatch = useDispatch();
+    
 
     //const {firstName, lastName, rol} = useSelector(state => state.auth);
-    
     const firstName = localStorage.getItem('nombres');
     const lastName = localStorage.getItem('apellidos');
     const idUser = localStorage.getItem('id');
-    const rol = localStorage.getItem('rol');
+    const roles = localStorage.getItem('rol');
+
     
-    //console.log(fich);
-    //<NavDropdown.Item eventKey={x.id}>{x.fichaId}</NavDropdown.Item>
+    const [rolState, setRolState] = useState(['Instructor', 'Administrador']);
+    const [fichasState, setFichasState] = useState([2141041, 21410041]);
+    const { rol } = useSelector(state => state.auth);
+    const handleSelect = (eventKey) => console.log(eventKey);
+    
+
+    useEffect(() => {
+        setRolState(['Instructor', 'Administrador']); 
+    }, [ ]); 
+   
+    
+
     return (
         <>
             <span className="navbar-brand">
-                {firstName+' '+lastName} <Badge pill bg="success">{rol}</Badge>{' '}
-
+                {firstName+' '+lastName} {' '}
+                
             </span>
             
-            <Nav className="me-auto">
+            <Nav className="me-auto" >
+
+                <NavDropdown title={roles} id="roles" onSelect={handleSelect} className='text-white P-0 rounded-pill bg-success' >
+                    {rolState.map(e=><NavDropdown.Item eventKey={e}>{e}</NavDropdown.Item>)}
+                </NavDropdown>
+
                 <Nav.Link href="/dashboard">Dashboard</Nav.Link>
-                {(!(rol==="Administrador"))||<Nav.Link href="/usuarios">Usuarios</Nav.Link>}
-                {(!(rol==="Administrador"))||<Nav.Link href="/programas">Programas</Nav.Link>}
-                {(!(rol==="Administrador"))||<Nav.Link href="/fichas">Fichas</Nav.Link>}
-                {(!(rol==="Instructor"))||<Nav.Link href="/clases">Clases</Nav.Link>}
-                {(!(rol==="Instructor"))||
-                <NavDropdown title="Fichas Asignadas" id="nav-dropdown">
-                    {}
+                {(!(roles==="Administrador"))||<Nav.Link href="/usuarios">Usuarios</Nav.Link>}
+                {(!(roles==="Administrador"))||<Nav.Link href="/programas">Programas</Nav.Link>}
+                {(!(roles==="Administrador"))||<Nav.Link href="/fichas">Fichas</Nav.Link>}
+                {(!(roles==="Instructor"))||<Nav.Link href="/clases">Clases</Nav.Link>}
+                {(!(roles==="Instructor"))||
+                <NavDropdown title="Fichas Asignadas" id="fichas" onSelect={handleSelect} className='text-white P-0' >
+                    {fichasState.map(e=><NavDropdown.Item eventKey={e}>{e}</NavDropdown.Item>)}
                 </NavDropdown>}
-                {(!(rol==="Aprendiz"))||<Nav.Link href="/asistencias">Mis Asistencias</Nav.Link>}
+                {(!(roles==="Aprendiz"))||<Nav.Link href="/inasistencias">Mis Inasistencias</Nav.Link>}
 
             </Nav>
             <Button onClick={startLogout()}>

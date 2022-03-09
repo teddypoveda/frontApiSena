@@ -4,7 +4,8 @@ import { Button } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import '../../styles.css';
 import { uiOpenModal, uiOpenModalDelete, uiOpenModalDetails } from '../../../actions/ui';
-import { Bodies } from './bodies';
+import {  ResourceUserModal } from '../Modal/ResourceUserModal';
+
 
 
 const columns= [
@@ -79,15 +80,16 @@ const columns= [
               showFirstLastPageButtons: true,
               pageSize: 5,
               padding: 'dense',
-              pageSizeOptions: [5, 10, 20],
+              pageSizeOptions: [5, 7, 10, ],
               rowStyle: {
                 backgroundColor: '#EEE',
-              }
+              },
+              search:false
               
             }}
             
           />
-          <Bodies/>  
+          <ResourceUserModal/>
 
       </div>
       );

@@ -4,7 +4,8 @@ import { authReducer } from './authReducer';
 import { userReducer } from './UserReducer';
 import { programReducer } from './ProgramReducer';
 import { fichaReducer } from './FichaReducer';
-
+import { claseReducer } from './ClaseReducer';
+import { AsistenciasReducer } from './AsistenciasReducer';
 
 
 export const rootReducer = combineReducers({
@@ -13,4 +14,6 @@ export const rootReducer = combineReducers({
     user: userReducer,
     program: programReducer,
     ficha: fichaReducer,
+    clase: claseReducer,
+    asistencias: AsistenciasReducer
 })

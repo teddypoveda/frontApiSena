@@ -2,6 +2,7 @@ import { types } from "../types/types";
 
 const initialState = {
     modalOpen: false,
+    modalJustificacion:false,
     modalDetails: false,
     modalDelete:false,
     modalNew: true,
@@ -22,7 +23,13 @@ const initialState = {
     fechaInicio:'',
     fechaFin:'',
     fechaInicioPracticas:'',
-    programaId:'',},
+    programaId:'',
+    fechaHora:'',
+    aula:'',
+    fichaId:'',
+    apiUserId:'',},
+
+    
 
 }
 
@@ -44,6 +51,13 @@ export const uiReducer = ( state = initialState, action ) => {
                 ...state,
                 modalNew:false,
                 modalOpen: true,
+                resourceSelector:action.select
+            }
+        case types.uiModalJustificacion:
+
+            return {
+                ...state,
+                modalJustificacion:true,
                 resourceSelector:action.select
             }
 
@@ -78,6 +92,7 @@ export const uiReducer = ( state = initialState, action ) => {
                 ...state,
                 modalOpen:false,
                 modalDetails: false,
+                modalJustificacion:false
 
             }
         case types.eventClearActiveEvent:

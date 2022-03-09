@@ -6,6 +6,7 @@ export const types = {
 
 
     uiOpenModal: '[ui] Open modal',
+    uiModalJustificacion: '[ui] Open modal justificacion',
     uiOpenModalDetails: '[ui] Open modal Details',
 
     uiModalDelete:'[ui] Open modal delete',
@@ -14,15 +15,15 @@ export const types = {
 
 
     eventClearActiveEvent: '[event] Clear active event',
-    eventUpdatedUser: '[event User] Event updated',
-    eventUpdatedCountry: '[event Country] Event updated',
-    eventDeletedUser: '[event User] Event deleted',
-    eventHotelGet: '[event Hotel] event Loaded',
-    eventUserGet: '[event User] event Loaded',
+
+
     eventAddUser:'[event User] event Add new',
 
     eventAddProgram:'[event Program] event Add new',
 
+    eventFichaClasesGet: '[event Ficha Clases] event Loaded',
+
+    eventInasistenciasGet: '[event Inasistencias] event Loaded',
 
 
 

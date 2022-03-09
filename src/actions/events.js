@@ -1,7 +1,7 @@
 import { fetchConToken } from "../helpers/fetch";
 import { types } from "../types/types";
 import Swal from 'sweetalert2'
-import { ToastContainer } from "react-toastify";
+
 
 
 
@@ -52,17 +52,92 @@ export const eventLoadingUser = (size=null, number=null, orderBy=null) =>{
             console.log(error);
         }
     }
+}
+export const eventLoadingFichaClases = (size=null, number=null, orderBy=null) =>{
+    return async (dispatch) => {
+        try {
+            const id = localStorage.getItem('id');
+            const idFicha= 2140041;
+            const resp = await fetchConToken(`Clases/ficha?idUser=${id}&idFicha=${idFicha}`,{});
+            const body = await resp.json();
+            dispatch(eventFichaClasesGet(body.clases));
+            
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+} 
+
+export const eventLoadingInasistencias = () =>{
+    return async (dispatch) => {
+        try {
+            const id = localStorage.getItem('id');
+            const resp = await fetchConToken(`Asistencias/inasistencias/${id}`,{});
+            const body = await resp.json();
+            dispatch(eventInasistenciasGet(body));
+            
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+} 
+
+
+
+export const eventLoadingFichasInstructor = (id, size=null, number=null, orderBy=null) =>{
+    return async (dispatch) => {
+        try {
+            const resp = await fetchConToken(`usuariosFichas/usuario/instructor/${id}?pageSize=${size}&pageNumber=${number}&orderBy=${orderBy}`,{});
+            const body = await resp.json();
+            console.log(body)            
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
 } 
 export const eventAddNewUser = (event)=>{
-    
+     
+    return async (dispatch) => {
+        try {
+            
+            const resp = await fetchConToken('usuarios',event,'Post');
+            const body = await resp.json();
+            console.log(body)
+            console.log(body.detail)
+            if(body.ok){
+                //dispatch(eventPostUser(event));
+                dispatch(closeModal());
+                Swal.fire(
+                'Exitosa!',
+                'Se ha registrado un nuevo usuario correctamente!',
+                'success'
+            )}else{
+                Swal.fire(
+                'Error!',
+                body.detail,
+                'error'
+                );
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export const eventAddNewProgram = (event)=>{
 
     return async (dispatch) => {
         try {
-            const resp = await fetchConToken('usuarios',event,'Post');
-            const body = await resp.json();
-        
+            console.log(event)
+
+            const resp = await fetchConToken('programas',event,'Post');
+
             if(resp.ok){
-                //dispatch(eventPostUser(event));
+                //dispatch(eventPostprogram(event));
                 dispatch(closeModal());
                 Swal.fire(
                 'Exitosa!',
@@ -83,25 +158,20 @@ export const eventAddNewUser = (event)=>{
     }
 }
 
-export const eventAddNewProgram = (event)=>{
+export const eventAddNewFicha = (event)=>{
 
     return async (dispatch) => {
         try {
+            console.log(event)
 
-            const data ={
-                id:event.id,
-                nombre:event.nombre,
-                version:event.version,
-                descripcion:event.descripcion,
-                tipoProgramaId: event.tipoProgramaId,
-            } 
-            const resp = await fetchConToken('programas',data,'Post');
+            const resp = await fetchConToken('fichas',event,'Post');
 
             if(resp.ok){
                 //dispatch(eventPostprogram(event));
+                dispatch(closeModal());
                 Swal.fire(
                 'Exitosa!',
-                'Se agregó correctamente!',
+                'Se agrega correctamente!',
                 'success'
             )}else{
                 Swal.fire(
@@ -110,7 +180,6 @@ export const eventAddNewProgram = (event)=>{
                 'error'
                 );
             }
-            dispatch(closeModal());
 
         } catch (error) {
             console.log(error);
@@ -118,18 +187,20 @@ export const eventAddNewProgram = (event)=>{
     }
 }
 
-export const eventAddNewFicha = (event)=>{
+export const eventAddNewClase = (event)=>{
 
     return async (dispatch) => {
         try {
+            console.log(event)
 
-            const resp = await fetchConToken('fichas',event,'Post');
+            const resp = await fetchConToken('clases',event,'Post');
 
             if(resp.ok){
                 //dispatch(eventPostprogram(event));
+                dispatch(closeModal());
                 Swal.fire(
                 'Exitosa!',
-                'Se agregó correctamente!',
+                'Se agrega correctamente!',
                 'success'
             )}else{
                 Swal.fire(
@@ -138,7 +209,6 @@ export const eventAddNewFicha = (event)=>{
                 'error'
                 );
             }
-            dispatch(closeModal());
 
         } catch (error) {
             console.log(error);
@@ -236,6 +306,36 @@ export const eventDeleteUser = (event)=>{
     }   
 }
 
+export const eventDeleteClase = (event)=>{
+    
+    return async (dispatch) => {
+        try {
+            const resp = await fetchConToken('usuarios/'+event,{},'Delete');
+            
+            if(resp.ok){
+                //dispatch(eventDeletedUser(event));
+                Swal.fire(
+                'Exitosa!',
+                'Se eliminó correctamente!',
+                'success'
+              )}else{
+              Swal.fire(
+                'Error!',
+                'No se puede eliminar!',
+                'error'
+              );
+              }
+
+            dispatch(closeModalDelete());
+
+
+
+        } catch (error) {
+            console.log(error);
+        }
+    }   
+}
+
 export const eventUpdateUser = (event)=>{
     
     return async (dispatch) => {
@@ -245,12 +345,12 @@ export const eventUpdateUser = (event)=>{
                 //dispatch(eventUpdatedUser(event));
                 Swal.fire(
                 'Exitosa!',
-                'Se modificó correctamente!',
+                'Se modificó el usuario correctamente!',
                 'success'
               )}else{
               Swal.fire(
                 'Error!',
-                'No se puede modificar!',
+                'No se puede modificar el usuario!',
                 'error'
               );
               }
@@ -268,6 +368,34 @@ export const eventUpdateProgram = (event)=>{
     return async (dispatch) => {
         try {
             const resp = await fetchConToken('programas/'+event.id,event,'PUT');
+            if(resp.ok){
+                dispatch(closeModal());
+                //dispatch(eventUpdatedProgram(event));
+                Swal.fire(
+                'Exitosa!',
+                'Se modificó correctamente!',
+                'success'
+              )}else{
+              Swal.fire(
+                'Error!',
+                'No se puede modificar!',
+                'error'
+              );
+              }
+
+        } catch (error) {
+            console.log(error);
+        } 
+    }    
+}
+
+export const eventUpdateFicha = (event)=>{
+
+    
+    return async (dispatch) => {
+
+        try {
+            const resp = await fetchConToken('fichas/'+event.id,event,'PUT');
             if(resp.ok){
                 //dispatch(eventUpdatedProgram(event));
                 Swal.fire(
@@ -290,20 +418,13 @@ export const eventUpdateProgram = (event)=>{
     }    
 }
 
-export const eventUpdateFicha = (event)=>{
+export const eventUpdateClase = (event)=>{
 
-    const data ={
-        id:event.id,
-        fechaInicio:event.fechaInicio,
-        fechaFin:event.fechaFin,
-        fechaInicioPracticas:event.fechaInicioPracticas,
-        programaId: event.programaId,
-    } 
     
     return async (dispatch) => {
 
         try {
-            const resp = await fetchConToken('fichas/'+data.id,data,'PUT');
+            const resp = await fetchConToken('fichas/'+event.id,event,'PUT');
             if(resp.ok){
                 //dispatch(eventUpdatedProgram(event));
                 Swal.fire(
@@ -339,6 +460,17 @@ const eventUserGet = (event)=>{
     return{type: types.eventUserGet,
         payload: event}
 } 
+
+const eventFichaClasesGet = (event)=>{
+    return{type: types.eventFichaClasesGet,
+        payload: event}
+} 
+
+const eventInasistenciasGet = (event)=>{
+    return{type: types.eventInasistenciasGet,
+        payload: event}
+}
+
 
 
 
