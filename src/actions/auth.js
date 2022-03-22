@@ -2,6 +2,7 @@ import { fetchSinToken,fetchConToken } from '../helpers/fetch';
 import { types } from '../types/types';
 import Swal from 'sweetalert2';
 import { Alert,Button } from 'react-bootstrap';
+import { uiChangeRol } from './ui';
 
 
 
@@ -23,11 +24,12 @@ export const startLogin = ( email, password ) => {
                     id:usuario.id,
                     rol: body.rol
                 }) );
+                body.rol.map(e=>e==="Instructor"&&dispatch(fichasUser(usuario.id)));
                 localStorage.setItem('email',usuario.email);
                 localStorage.setItem('id',usuario.id);
                 localStorage.setItem('nombres',usuario.nombres);
                 localStorage.setItem('apellidos',usuario.apellidos);
-                localStorage.setItem('rol',body.rol[0]);
+                dispatch(uiChangeRol(body.rol[0]));
                 localStorage.setItem('checking',true);
                 Swal.fire('¡Ingreso Exitoso!', '¡Bienvenido al sistema de asistencia de aprendices!', 'success');
             
@@ -39,13 +41,18 @@ export const startLogin = ( email, password ) => {
     }
 }
 
-export const fichasUser = (id) => {
+const fichasUser = (id) => {
     
-    return async() => {
+    return async(dispatch) => {
         try {
 
-            const resp = await fetchConToken( 'usuariosfichas/usuario/'+id, { }, 'GET' );
-            return await resp.json();
+            const resp = await fetchConToken( 'usuariosFichas/usuario/instructor/'+id, { }, 'GET' );
+            const body = await resp.json();
+            var fichas=[];
+            body.map(e=>fichas.push(e.fichaId))
+            console.log(fichas)
+            dispatch(authFichaInstructor(fichas));
+
             
         } catch (error) {
             console.log(error);
@@ -107,6 +114,8 @@ const login = ( user ) => ({
     type: types.authLogin,
     payload: user
 });
+
+const authFichaInstructor =(ids)=>({ type: types.authFichaInstructor, payload:ids })
 
 
 export const startLogout = () => {

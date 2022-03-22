@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 export const PrivateRoute = ({
@@ -8,6 +9,7 @@ export const PrivateRoute = ({
     component: Component,
     ...rest
 }) => {
+    const history = useHistory();
 
     return (
         <>
@@ -15,7 +17,7 @@ export const PrivateRoute = ({
                 component={ (props) => (
                     ( isAuthenticated )
                         ? ( <Component { ...props } /> )
-                        : ( <Redirect to="/dashboard" /> )
+                        : (()=>history.push("/dashboard") )
                 )}
             
             />

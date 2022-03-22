@@ -22,11 +22,6 @@ export const programReducer = ( state = initialState, action ) => {
                      action.payload
                 ],
             }
-        case types.eventUserGet:
-            return {
-                ...state,
-                user: action.payload                
-            }
 
         case types.eventClearModal:
             return {

@@ -6,6 +6,7 @@ import { programReducer } from './ProgramReducer';
 import { fichaReducer } from './FichaReducer';
 import { claseReducer } from './ClaseReducer';
 import { AsistenciasReducer } from './AsistenciasReducer';
+import { UserFichasReducer } from './UserFichasReducer';
 
 
 export const rootReducer = combineReducers({
@@ -15,5 +16,6 @@ export const rootReducer = combineReducers({
     program: programReducer,
     ficha: fichaReducer,
     clase: claseReducer,
-    asistencias: AsistenciasReducer
+    asistencias: AsistenciasReducer,
+    userFichas:UserFichasReducer,
 })

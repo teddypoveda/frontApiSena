@@ -17,8 +17,9 @@ export const ResourceClasesModal = () => {
   const [errores, setErrores] = useState([]);
   const {id, fechaHora, aula, nombre, fichaId, apiUserId}  = FormValues||{};
   
+  
   useEffect(() => {
-    setFormValues({id:resourceSelector.id, fechaHora:resourceSelector.fechaHora, aula:resourceSelector.aula, nombre:resourceSelector.nombre, fichaId:resourceSelector.fichaId, apiUserId:resourceSelector.apiUserId})
+    setFormValues({id:resourceSelector.id, fechaHora:resourceSelector.fechaHora, aula:resourceSelector.aula, nombre:resourceSelector.nombre, fichaId:resourceSelector.fichaId, apiUserId})
   }, [ resourceSelector,eventClearActiveEvent ]);
   
     
@@ -40,6 +41,7 @@ export const ResourceClasesModal = () => {
 
   const handleSubmitForm= async(e)=>{
     e.preventDefault();
+    FormValues.apiUserId=localStorage.getItem('id');
     Object.keys(FormValues).map(e=>{
       if (e==="id") {
         return;
@@ -76,19 +78,19 @@ export const ResourceClasesModal = () => {
         {errores.length !== 0 && errores[0].message}
           <br />
           <br />
-        {(modalNew)||<label htmlFor="id">id</label>}
-        {(modalNew)||<input className="form-control" type="text" name="id" id="id" readOnly onChange={handleChange} value={id} disable/>}
+          {(modalNew)||<label htmlFor="id">id</label>}
+          {(modalNew)||<input className="form-control" type="text" name="id" id="id" readOnly onChange={handleChange} value={id} disable/>}
           <br />
           <label htmlFor="fechaHora">Fecha y Hora de la Clae</label>
           <input className="form-control" type="datetime-local" name="fechaHora" id="fechaHora" onChange={handleChange} value={fechaHora} />
           <br />
-          <label htmlFor="aula">Fecha Fin de Formación</label>
+          <label htmlFor="aula">Aula</label>
           <input className="form-control" type="text" name="aula" id="aula" onChange={handleChange} value={aula} />
           <br />
-          <label htmlFor="nombre">Fecha de Incio Practicas</label>
+          <label htmlFor="nombre">Nombre de la clase</label>
           <input className="form-control" type="text" name="nombre" id="nombre" onChange={handleChange} value={nombre}/>
           <br />
-          <label htmlFor="fichaId">Programa</label>
+          <label htmlFor="fichaId">Ficha</label>
           <input className="form-control" type="text" name="fichaId" id="fichaId" onChange={handleChange} value={fichaId}/>
           
         </div>

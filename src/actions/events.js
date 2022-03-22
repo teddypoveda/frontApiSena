@@ -1,7 +1,7 @@
 import { fetchConToken } from "../helpers/fetch";
 import { types } from "../types/types";
 import Swal from 'sweetalert2'
-
+import { uiChangeFicha } from "./ui";
 
 
 
@@ -32,13 +32,30 @@ export const eventUpdateRolesUser = (id, roles) =>{
             dispatch(closeModal());
             
 
-        } catch (error) {
+        } catch (error) { 
             console.log(error);
         }
-
+        
     
     }
 } 
+
+export const eventTomarAsistencia = (idFicha) =>{
+    return async (dispatch) => {
+        try {
+            const resp = await fetchConToken(`usuariosFichas/Ficha/${idFicha}`,{});
+            const body = await resp.json();
+            var user=[];
+            body.map(e=> user.push(e.apiUser));
+            dispatch(eventUserGet(user))
+            
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
 export const eventLoadingUser = (size=null, number=null, orderBy=null) =>{
     return async (dispatch) => {
         try {
@@ -53,14 +70,44 @@ export const eventLoadingUser = (size=null, number=null, orderBy=null) =>{
         }
     }
 }
-export const eventLoadingFichaClases = (size=null, number=null, orderBy=null) =>{
+export const eventLoadingFichaClases = (idFicha) =>{
     return async (dispatch) => {
         try {
             const id = localStorage.getItem('id');
-            const idFicha= 2140041;
             const resp = await fetchConToken(`Clases/ficha?idUser=${id}&idFicha=${idFicha}`,{});
             const body = await resp.json();
-            dispatch(eventFichaClasesGet(body.clases));
+            var clases=[];
+            body.clases.map(e=> clases.push(e));
+            dispatch(eventFichaClasesGet(clases));
+            
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export const eventLoadingFichasUser = (id) =>{
+    return async (dispatch) => {
+        try {
+            const resp = await fetchConToken(`usuariosFichas/usuario/${id}`,{});
+            const body = await resp.json();
+            dispatch(eventUserFichasGet(body))            
+            
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+export const eventLoadingInasistenciasFicha = () =>{
+    return async (dispatch) => {
+        try {
+            const id = localStorage.getItem('id');
+            const resp = await fetchConToken(`Asistencias/inasistencias/${id}`,{});
+            const body = await resp.json();
+            dispatch(eventInasistenciasGet(body));
             
 
         } catch (error) {
@@ -68,6 +115,8 @@ export const eventLoadingFichaClases = (size=null, number=null, orderBy=null) =>
         }
     }
 } 
+
+
 
 export const eventLoadingInasistencias = () =>{
     return async (dispatch) => {
@@ -91,13 +140,39 @@ export const eventLoadingFichasInstructor = (id, size=null, number=null, orderBy
         try {
             const resp = await fetchConToken(`usuariosFichas/usuario/instructor/${id}?pageSize=${size}&pageNumber=${number}&orderBy=${orderBy}`,{});
             const body = await resp.json();
-            console.log(body)            
-
         } catch (error) {
             console.log(error);
         }
     }
 } 
+
+export const eventAddFichaUser = (idUser,idFicha)=>{
+     const event={idUser,idFicha};
+    return async (dispatch) => {
+        try {
+            
+            const resp = await fetchConToken('usuarios',event,'Post');
+            const body = await resp.json();
+            if(body.ok){
+                //dispatch(eventPostUser(event));
+                dispatch(closeModal());
+                Swal.fire(
+                'Exitosa!',
+                'Se ha registrado un nuevo usuario correctamente!',
+                'success'
+            )}else{
+                Swal.fire(
+                'Error!',
+                body.detail,
+                'error'
+                );
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
 export const eventAddNewUser = (event)=>{
      
     return async (dispatch) => {
@@ -456,8 +531,13 @@ const eventPostUser = (event)=> ({ type: types.eventAddUser, payload: event});
 //const eventPostprogram = (event)=> ({ type: types.eventAddProgram, payload: event});
 
 
+
 const eventUserGet = (event)=>{
     return{type: types.eventUserGet,
+        payload: event}
+} 
+const eventUserFichasGet = (event)=>{
+    return{type: types.eventUserFichasGet,
         payload: event}
 } 
 
@@ -488,3 +568,5 @@ export const evenModaltDeleted = () => ({ type: types.modalDelete });
 export const eventClearActiveEvent = () => ({ type: types.eventClearActiveEvent });
 
 export const eventLogout =() => ({ type: types.eventLogout });
+export const uiModalAsistencia=()=>({type: types.uiModalAsistencia});
+ 

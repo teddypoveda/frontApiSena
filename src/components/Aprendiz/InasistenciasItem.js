@@ -16,9 +16,7 @@ export const InasistenciasItem = (props) => {
         <span className="visually-hidden">Loading...</span>
     </Spinner>);
     } 
-    const send= (id)=>{
-        dispatch(uiModalJustificacion(id))
-    }
+     
 
     
     return (
@@ -43,7 +41,7 @@ export const InasistenciasItem = (props) => {
             >
                 {({ ref, ...triggerHandler }) => (
                 props.estadoAsistenciaId===1&&<Button
-                    onClick={send(props.id)}
+                    onClick={()=>dispatch(uiModalJustificacion(props.id))}
                     variant="light"
                     {...triggerHandler}
                     className="d-inline-flex align-items-center"

@@ -40,7 +40,7 @@ export const userReducer = ( state = initialState, action ) => {
         case types.eventUserGet:
             return {
                 ...state,
-                user: action.payload                
+                user:action.payload,               
             }
 
         case types.eventClearModal:

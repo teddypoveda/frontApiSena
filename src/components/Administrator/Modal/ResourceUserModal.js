@@ -1,9 +1,11 @@
 import React, { useEffect, useState} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import { eventAddNewProgram, eventAddNewUser, eventClearActiveEvent, eventDeleteUser, eventUpdateUser } from '../../../actions/events';
+import { eventAddNewProgram, eventAddNewUser, eventClearActiveEvent, eventDeleteUser, eventLoadingFichasUser, eventUpdateUser } from '../../../actions/events';
 import { uiCloseModal, uiCloseModalDelete } from '../../../actions/ui';
+import { AsociarFicha } from '../user/AsociarFicha';
 import { CheckboxesRoles } from '../user/CheckBoxesRoles';
+
 
 
 export const ResourceUserModal = () => {
@@ -160,7 +162,7 @@ export const ResourceUserModal = () => {
           <br/>
           <CheckboxesRoles/>       
           <br/>
-          
+          <AsociarFicha key={id} idUser={id}/>
         </div> 
       </ModalBody>
 

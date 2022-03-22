@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import '../../styles.css';
 import { uiOpenModal, uiOpenModalDelete, uiOpenModalDetails } from '../../../actions/ui';
 import {  ResourceUserModal } from '../Modal/ResourceUserModal';
+import { eventLoadingFichasUser } from '../../../actions/events';
 
 
 
@@ -66,7 +67,7 @@ const columns= [
               {
                 icon: 'view_column',
                 tooltip: 'Saber Mas',
-                onClick: (event, rowData) => dispatch(uiOpenModalDetails(rowData))
+                onClick: (event, rowData) => dispatch(uiOpenModalDetails(rowData), dispatch(eventLoadingFichasUser(rowData.id)))
               },
               {
                 icon: 'delete',

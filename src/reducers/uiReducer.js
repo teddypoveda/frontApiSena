@@ -2,6 +2,9 @@ import { types } from "../types/types";
 
 const initialState = {
     modalOpen: false,
+    idFichaSelect:'',
+    rolSelect:'',
+    modalTomarAsistencia:false,
     modalJustificacion:false,
     modalDetails: false,
     modalDelete:false,
@@ -53,6 +56,12 @@ export const uiReducer = ( state = initialState, action ) => {
                 modalOpen: true,
                 resourceSelector:action.select
             }
+        case types.uiModalAsistencia:
+
+            return {
+                ...state,
+                modalTomarAsistencia:true,
+            }
         case types.uiModalJustificacion:
 
             return {
@@ -82,6 +91,16 @@ export const uiReducer = ( state = initialState, action ) => {
                 idSelector:action.select.id,
                 resourceSelector:action.select
             }
+        case types.uiChangeFicha:
+            return {
+                ...state,
+                idFichaSelect:action.Payload,
+            }
+        case types.uiChangeRol:
+            return {
+                ...state,
+                rolSelect:action.Payload,
+            }
         case types.uiModalDeleteClose:
             return {
                 ...state,
@@ -92,7 +111,8 @@ export const uiReducer = ( state = initialState, action ) => {
                 ...state,
                 modalOpen:false,
                 modalDetails: false,
-                modalJustificacion:false
+                modalJustificacion:false,
+                modalTomarAsistencia:false
 
             }
         case types.eventClearActiveEvent:

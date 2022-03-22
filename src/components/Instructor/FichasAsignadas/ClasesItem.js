@@ -1,14 +1,17 @@
 import React from 'react'
 import { Stack, Button, Card, Badge, Spinner, Tooltip,Image, OverlayTrigger } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
+import { eventTomarAsistencia, uiModalAsistencia } from '../../../actions/events';
+import { ResourceClasesModal } from '../Modal/TomarAsistenciaModal';
 //import { uiOpenModalDelete,uiOpenModalHotelId } from '../../actions/ui';
 
-//{id, country, name, address, rating, countryId}
 
 export const ClasesItem = (props) => {
     const dispatch = useDispatch();
     /* const Update = (guid)=>(dispatch(uiOpenModalHotelId(guid))); 
     const Delete = (guid)=>(dispatch(uiOpenModalDelete(guid)));  */
+    
+    
 
     if (props.id==='') {
         return (<Spinner animation="border" role="status">
@@ -18,7 +21,7 @@ export const ClasesItem = (props) => {
 
     
     return (
-       
+       <>
         <Card 
         bg='Primary'
         key={props.id}
@@ -42,6 +45,7 @@ export const ClasesItem = (props) => {
                     variant="light"
                     {...triggerHandler}
                     className="d-inline-flex align-items-center"
+                    onClick={()=>dispatch(uiModalAsistencia())}
                 >
                     <Image
                     ref={ref}
@@ -59,5 +63,9 @@ export const ClasesItem = (props) => {
             </Stack>
         </Card.Body> 
         </Card>
+       
+       <ResourceClasesModal nombreClase={props.nombre}/>
+       </>
+       
     )
 }

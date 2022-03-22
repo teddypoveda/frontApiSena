@@ -12,6 +12,7 @@ export const UsersScreen = () => {
 
     return (
         <>
+        
             <h2>Usuarios</h2>
             <UserMaterial />
         </>

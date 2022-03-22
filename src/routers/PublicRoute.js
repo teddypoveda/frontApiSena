@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Route, Redirect } from 'react-router-dom';
+import { NavBarUser } from './NavBarUser';
+import {useHistory} from 'react-router-dom'
 
 
 export const PublicRoute = ({
@@ -10,14 +12,14 @@ export const PublicRoute = ({
     ...rest
 }) => {
 
-
+    const history = useHistory();
     return (
         
         <Route { ...rest }
-            component={ (props) => (( isAuthenticated )
-                    ? ( <Redirect to="/login" /> )
-                    : ( <Component { ...props } /> )
-            )}
+            component={ (props) => ( isAuthenticated )
+                    ? ( ()=>history.push("/inasistencias") )
+                    : ( <Component { ...props } /> )                    
+             }
         
         />
     )
